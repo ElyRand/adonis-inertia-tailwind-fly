@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16.2
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: adonis
+    ports:
+      - 5432:5432
+
+  redis:
+    container_name: redis
+    image: redis:7.2-alpine
+    volumes:
+      - redis_volume:/data
+    ports:
+      - 6379:6379
+
+  adonis_app:
+    container_name: adonis_app
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    build:
+      context: .
+      target: dependencies
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres
+      - REDIS_HOST=redis
+    volumes:
+      - ./:/home/node/app
+      - /home/node/app/node_modules
+    tty: true      
+    command: dumb-init node ace serve --watch
+
+volumes:
+  postgres_volume:
+  redis_volume:
