@@ -4,8 +4,11 @@ import User from './user.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Compagnie extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   declare id: number
+
+  @column()
+  declare uuid: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -6,6 +6,8 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
+      table.uuid('uuid').unique().defaultTo(this.db.knexRawQuery('gen_random_uuid()'))
+
       table
         .integer('candidat_id')
         .unsigned()
