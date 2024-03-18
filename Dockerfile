@@ -21,6 +21,5 @@ ENV PORT=${PORT}
 ENV HOST=0.0.0.0
 COPY --chown=node:node --from=build /home/node/app/build .
 RUN npm ci --omit-dev
-RUN node ace db:seed
 CMD [ "dumb-init", "node", "bin/server.js" ]
 EXPOSE ${PORT}

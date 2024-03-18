@@ -18,4 +18,7 @@ export default class Candidat extends BaseModel {
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @column()
+  declare userId: number
 }

@@ -31,6 +31,7 @@ services:
       context: .
       target: dependencies
     ports:
+      - 5173:5173
       - ${PORT}:${PORT}
       - 9229:9229
     env_file:

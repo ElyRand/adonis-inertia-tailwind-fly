@@ -16,9 +16,13 @@ export default class Candidature extends BaseModel {
 
   @belongsTo(() => Candidat)
   declare candidat: BelongsTo<typeof Candidat>
+  @column()
+  declare candidatId: number
 
   @belongsTo(() => Poste)
   declare poste: BelongsTo<typeof Poste>
+  @column()
+  declare posteId: number
 
   @column()
   declare cv: object | null

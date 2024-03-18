@@ -10,11 +10,7 @@
 const PostesController = () => import('#controllers/postes_controller')
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+router.on('/').render('welcome')
 
 router.get('/postes', [PostesController, 'index'])
 router.post('/postes', [PostesController, 'store'])

@@ -1,21 +1,26 @@
 import Compagnie from '#models/compagnie'
+import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    // await Compagnie.createMany([
-    //   {
-    //     nom: 'Google',
-    //   },
-    //   {
-    //     nom: 'Adonis',
-    //   },
-    //   {
-    //     nom: 'ILOC',
-    //   },
-    // ])
-    await Compagnie.create({
-      nom: 'Google',
+    const compagnies = await Compagnie.createMany([
+      {
+        nom: 'Google',
+      },
+      {
+        nom: 'Adonis',
+      },
+      {
+        nom: 'ILOC',
+      },
+    ])
+
+    const promises = compagnies.map(async (compagnie) => {
+      const user = await User.findOrFail(1)
+      return user.related('compagnies').save(compagnie)
     })
+
+    await Promise.all(promises)
   }
 }
