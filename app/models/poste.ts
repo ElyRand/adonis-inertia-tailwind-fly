@@ -23,5 +23,8 @@ export default class Poste extends BaseModel {
   declare compagnie: BelongsTo<typeof Compagnie>
 
   @column()
+  declare compagnieId: number
+
+  @column()
   declare status: 'OPEN' | 'CLOSED' | 'DRAFT' | 'ARCHIVED'
 }

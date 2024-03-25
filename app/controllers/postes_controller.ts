@@ -3,8 +3,10 @@ import { createPostValidator } from '#validators/poste'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class PostesController {
-  async index({}: HttpContext) {
-    return await Poste.all()
+  async index({ view, auth }: HttpContext) {
+    await auth.check()
+    const postes = await Poste.all()
+    return view.render('postes/show', { postes })
   }
 
   async store({ request }: HttpContext) {

@@ -61,11 +61,14 @@
     "@adonisjs/session": "^7.1.1",
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^2.0.2",
+    "@tailwindcss/forms": "^0.5.7",
     "@vinejs/vine": "^1.8.0",
     "edge.js": "^6.0.1",
+    "htmx.org": "^1.9.11",
     "luxon": "^3.4.4",
     "pg": "^8.11.3",
-    "reflect-metadata": "^0.2.1"
+    "reflect-metadata": "^0.2.1",
+    "unpoly": "^3.7.3"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"

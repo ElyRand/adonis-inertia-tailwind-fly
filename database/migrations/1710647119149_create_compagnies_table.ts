@@ -17,6 +17,8 @@ export default class extends BaseSchema {
 
       table.index(['uuid'], 'compagnies_uuid_index')
       table.index(['nom'], 'compagnies_nom_index')
+
+      table.string('email', 100).notNullable().unique()
     })
   }
 

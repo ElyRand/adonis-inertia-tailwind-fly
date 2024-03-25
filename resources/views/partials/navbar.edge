@@ -1,0 +1,16 @@
+<nav class="h-20 bg-orange-300 p-2 flex flex-row">
+    <div class="flex-1">
+        @if(auth.isAuthenticated)
+        <p>Salut, {{auth.user.email}}</p>
+        @else
+        <p>Salut, Anonyme</p>
+        @end
+    </div>
+    <div>
+        @if(auth.isAuthenticated)
+        <a href="/logout" class="btn btn-red">Déconnexion</a>
+        @else
+        <a href="/auth/login" class="btn btn-blue">Connexion</a>
+        @end
+    </div>
+</nav>

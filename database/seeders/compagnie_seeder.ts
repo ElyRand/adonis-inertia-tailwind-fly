@@ -7,12 +7,15 @@ export default class extends BaseSeeder {
     const compagnies = await Compagnie.createMany([
       {
         nom: 'Google',
+        email: 'google@google.com',
       },
       {
         nom: 'Adonis',
+        email: 'adonis@google.com',
       },
       {
         nom: 'ILOC',
+        email: 'iloc@gpple.com',
       },
     ])
 
