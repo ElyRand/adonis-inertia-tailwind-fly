@@ -2,6 +2,12 @@ import { defineConfig } from 'vite'
 import adonisjs from '@adonisjs/vite/client'
 import autoprefixer from 'autoprefixer'
 import tailwindcss from 'tailwindcss'
+import inertia from '@adonisjs/inertia/client'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [
@@ -17,6 +23,9 @@ export default defineConfig({
        */
       reload: ['resources/views/**/*.edge'],
     }),
+    inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }),
+    react(),
+    adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['inertia/**/*.tsx'] }),
   ],
   css: {
     postcss: {
@@ -26,5 +35,11 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+  },
+  resolve: {
+    alias: {
+      '@': `${dirname}/inertia`,
+      '~': `${dirname}/inertia`,
+    },
   },
 })

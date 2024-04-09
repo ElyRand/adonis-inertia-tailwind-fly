@@ -12,16 +12,14 @@ const CompagniesController = () => import('#controllers/compagnies_controller')
 const SigninController = () => import('#controllers/signin_controller')
 const SignupController = () => import('#controllers/signup_controller')
 import { HttpContext } from '@adonisjs/core/http'
-import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
-import { MigrationRunner } from '@adonisjs/lucid/migration'
-import db from '@adonisjs/lucid/services/db'
+import { middleware } from './kernel.js'
 
 router.get('/', async ({ response }) => {
   response.redirect().toRoute('compagnies.index')
 })
 
-router.get('/postes', [PostesController, 'index'])
+router.get('/postes', [PostesController, 'index']).as('postes.index')
 
 router.get('/compagnies', [CompagniesController, 'index']).as('compagnies.index')
 router.on('/compagnies/create').render('compagnies/create').as('compagnies.store')
@@ -31,15 +29,7 @@ router
   .where('uuid', router.matchers.uuid())
 router.post('/compagnies', [CompagniesController, 'store'])
 
-router.get('test', async () => {
-  const migrator = new MigrationRunner(db, app, {
-    direction: 'up',
-    dryRun: false,
-  })
-
-  await migrator.run()
-  return migrator.migratedFiles
-})
+router.get('logout', [SigninController, 'logout']).use(middleware.auth())
 
 router
   .group(() => {
@@ -58,6 +48,13 @@ router
 router
   .group(() => {
     router.get('login', [SigninController, 'loginCompany'])
-    router.get('register', [SignupController, 'registerCompany'])
+    router
+      .on('register')
+      .render('auth/compagnie/signup', { actionRoute: '/compagnies/auth/register' })
+      .as('auth.compagnies.signup')
+    router.post('login', [SigninController, 'loginCompany'])
+    router.post('register', [SignupController, 'registerCompany'])
   })
   .prefix('compagnies')
+
+router.on('/inertia').renderInertia('home', { version: 6 })

@@ -4,12 +4,11 @@ import { createAuthValidator } from '#validators/auth'
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class SignupController {
-  async register({ request, response, auth, view }: HttpContext) {
+  async register({ request, response, auth }: HttpContext) {
     const payload = await request.validateUsing(createAuthValidator)
     const user = await User.create(payload)
 
     await auth.use('user').login(user)
-    view.share({ user })
     await response.redirect('/')
   }
 

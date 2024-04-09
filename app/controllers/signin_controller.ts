@@ -1,7 +1,7 @@
 import Compagnie from '#models/compagnie'
 import User from '#models/user'
 import { createAuthValidator } from '#validators/auth'
-import type { HttpContext } from '@adonisjs/core/http'
+import { type HttpContext } from '@adonisjs/core/http'
 
 export default class SigninController {
   async login({ request, response, auth }: HttpContext) {
@@ -22,8 +22,8 @@ export default class SigninController {
   }
 
   async logout({ response, auth }: HttpContext) {
+    console.log('logout', auth.defaultGuard)
     await auth.use(auth.defaultGuard).logout()
-    // TODO: Redirect to the jobs page
-    return response.redirect('/')
+    return response.redirect().toRoute('postes.index')
   }
 }

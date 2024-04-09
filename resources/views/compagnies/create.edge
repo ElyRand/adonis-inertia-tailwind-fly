@@ -3,6 +3,7 @@
     <a href={{route('compagnies.index')}}>Retour home</a>
     <h1>Créer une compagnier</h1>
     <form action="/compagnies" method="post" class="flex flex-col">
+        {{ csrfField() }}
         <label for="nom">Nom</label>
         <input class="border-2 border-blue-800 px-2 py-3" type="text" name="nom" id="nom">
         <button class="bg-red-500">Submit</button>
